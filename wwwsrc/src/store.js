@@ -27,6 +27,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    //
+    //USER ACTIONS
+    //
     register({ commit, dispatch }, newUser) {
       auth.post('register', newUser)
         .then(res => {
@@ -55,6 +58,13 @@ export default new Vuex.Store({
         })
         .catch(e => {
           console.log('Login Failed')
+        })
+    },
+    logout({}) {
+      auth.delete("logout")
+        .then(res => {
+          if (!res.data) { return }
+          router.push({name: 'login'})
         })
     }
   }

@@ -62,7 +62,6 @@ namespace keepr
 
             services.AddTransient<IDbConnection>(x => CreateDBContext());
             services.AddTransient<UserRepository>();
-            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         private IDbConnection CreateDBContext()

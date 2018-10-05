@@ -1,21 +1,47 @@
 <template>
-    <div class="login">
-        <form v-if="loginForm" @submit.prevent="loginUser">
-            <input type="email" v-model="creds.email" placeholder="email">
-            <input type="password" v-model="creds.password" placeholder="password">
-            <button type="submit">Login</button>
-        </form>
-        <form v-else @submit.prevent="register">
-            <input type="text" v-model="newUser.username" placeholder="name">
-            <input type="email" v-model="newUser.email" placeholder="email">
-            <input type="password" v-model="newUser.password" placeholder="password">
-            <button type="submit">Create Account</button>
-        </form>
-        <div @click="loginForm = !loginForm">
-            <p v-if="loginForm">No account Click to Register</p>
-            <p v-else>Already have an account click to Login</p>
-        </div>
-    </div>
+    <v-content id="h">
+        <v-container fill-height>
+            <v-layout justify-center align-center >
+                <v-flex sm8 md4>
+                    <div class="login">
+                        <v-card v-if="loginForm" >
+                            <v-toolbar card color="primary">
+                                <v-toolbar-title>
+                                    <v-icon color="white" large>fab fa-korvue</v-icon>
+                                </v-toolbar-title>
+                                 <v-spacer></v-spacer>
+                                <v-btn @click="loginForm = !loginForm">
+                                    Create new account
+                                </v-btn>
+                            </v-toolbar>
+                            <form @submit.prevent="loginUser">
+                                <input type="email" v-model="creds.email" placeholder="email">
+                                <input type="password" v-model="creds.password" placeholder="password">
+                                <button type="submit">Login</button>
+                            </form>
+                        </v-card>
+                        <v-card v-else>
+                            <v-toolbar card>
+                                <v-toolbar-title>
+                                    <v-icon color="primary" large>fab fa-korvue</v-icon>
+                                </v-toolbar-title>
+                                <v-spacer></v-spacer>
+                                <v-btn color="primary" @click="loginForm = !loginForm">
+                                    I have an account
+                                </v-btn>
+                            </v-toolbar>
+                            <form @submit.prevent="register">
+                                <input type="text" v-model="newUser.username" placeholder="name">
+                                <input type="email" v-model="newUser.email" placeholder="email">
+                                <input type="password" v-model="newUser.password" placeholder="password">
+                                <button type="submit">Create Account</button>
+                            </form>
+                        </v-card>
+                    </div>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-content>
 </template>
 
 <script>
@@ -49,3 +75,8 @@
         }
     };
 </script>
+<style>
+#h {
+    height: 100vh;
+}
+</style>
