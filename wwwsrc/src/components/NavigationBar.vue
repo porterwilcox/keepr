@@ -1,18 +1,18 @@
 <template>
-    <v-toolbar>
-        <v-btn flat href="#"> <!-- route to top of page -->
-            <v-icon color="primary" large>fab fa-korvue</v-icon>
+    <v-toolbar color="cyan lighten-3">
+        <v-btn flat href="#" icon> <!-- route to top of page -->
+            <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
         </v-btn>
         <v-toolbar-items>
-            <v-text-field prepend-inner-icon="search" single-line clearable v-model="search"></v-text-field>
+            <v-text-field prepend-inner-icon="search" single-line clearable v-model="search" placeholder="search keeps"></v-text-field>
         </v-toolbar-items>
-        <v-toolbar-title>keeper</v-toolbar-title>
+        <v-toolbar-title ml-5>keeper</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
-            <v-btn>
+            <v-btn flat >
                 new keep
             </v-btn>
-            <v-btn>
+            <v-btn flat >
                 my vaults
             </v-btn>
             <v-btn icon>
