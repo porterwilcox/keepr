@@ -2,6 +2,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace keepr.Models
 {
+    public class KeepToDelete
+    {
+        public int Id { get; set; }
+        public string UserId { get; set; }
+        public string SendingUserId { get; set; }
+    }
     public class Keep
     {
         public int Id { get; set; }
@@ -17,7 +23,7 @@ namespace keepr.Models
 
         public string Img { get; set; } = "";
 
-        public bool isPrivate { get; set; } = false;
+        public int isPrivate { get; set; } = 0;
 
         public int Views { get; set; }
 

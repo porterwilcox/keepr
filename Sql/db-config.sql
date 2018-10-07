@@ -21,11 +21,11 @@
 
 -- CREATE TABLE keeps (
 --     id int NOT NULL AUTO_INCREMENT,
---     name VARCHAR(20) NOT NULL,
+--     name VARCHAR(50) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
 --     img VARCHAR(255),
---     isPrivate BIT,
+--     isPrivate tinyint,
 --     views INT DEFAULT 0,
 --     shares INT DEFAULT 0,
 --     keeps INT DEFAULT 0,
@@ -35,7 +35,6 @@
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
-
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,

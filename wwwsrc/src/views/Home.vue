@@ -1,12 +1,13 @@
 <template>
   <div class="home">
     <navigation-bar />
-    <h1>Welcome Home</h1>
+    <keeps />
   </div>
 </template>
 
 <script>
 import NavigationBar from "@/components/NavigationBar";
+import Keeps from "@/components/Keeps";
   export default {
     name: "home",
     mounted() {
@@ -17,7 +18,8 @@ import NavigationBar from "@/components/NavigationBar";
       this.$store.dispatch("getKeeps", 0) //will have to increment argument. maybe in store is better idea anyway
     },
     components: {
-      NavigationBar
+      NavigationBar,
+      Keeps
     }
   };
 </script>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using Dapper;
@@ -16,20 +17,26 @@ namespace keepr.Repositories
             num++;
             int rangeH = 25 * num;
             return _db.Query<Keep>($@"SELECT * FROM keeps
-            WHERE isPrivate IS NULL AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH});
+            WHERE isPrivate = 0 AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH });
         }
         //Post a Keep
         public Keep Create(Keep keep)
         {
             int id = _db.ExecuteScalar<int>(@"INSERT INTO keeps
             (name, description, userId, isPrivate, img)
-            VALUES (@Name, @Description, @userId, isPrivate, img);
+            VALUES (@Name, @Description, @userId, @isPrivate, @img);
             SELECT LAST_INSERT_ID();", keep);
             if (id == 0) return null;
             keep.Id = id;
             return keep;
         }
-
+        //Delete a Keep
+        public bool Delete(KeepToDelete payload)
+        {
+            int successfulDelete = _db.Execute("DELETE FROM keeps WHERE id = @Id", payload);
+            if (successfulDelete != 1) return false;
+            return true;
+        }
 
 
 
@@ -39,5 +46,6 @@ namespace keepr.Repositories
         {
             _db = db;
         }
+
     }
 }

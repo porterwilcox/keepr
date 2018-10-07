@@ -15,7 +15,7 @@ namespace keepr.Controllers
         [HttpGet("{num}")]
         public IEnumerable<Keep> Get([FromRoute] int num)
         {
-           return _repo.GetSomePublic(num);
+            return _repo.GetSomePublic(num);
         }
 
         [HttpPost]
@@ -25,6 +25,14 @@ namespace keepr.Controllers
             Keep keep = _repo.Create(rawKeep);
             if (keep == null) throw new Exception("Error inserting keep into the db.");
             return keep;
+        }
+
+        [HttpDelete]
+        public bool Delete([FromBody] KeepToDelete payload)
+        {
+            if (!ModelState.IsValid) throw new Exception("Invalid information sent.");
+            if (payload.UserId != payload.SendingUserId) throw new Exception("You cannot delete a keep you didn't author.");
+            return _repo.Delete(payload);
         }
 
         public KeepsController(KeepsRepository repo)

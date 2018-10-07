@@ -19,12 +19,22 @@ let api = Axios.create({
 
 export default new Vuex.Store({
   state: {
-    user: {}
+    user: {},
+    keeps: []
   },
   mutations: {
+    //
+    //USER MUTATIONS
+    //
     setUser(state, user) {
       state.user = user
       console.log(user)
+    },
+    //
+    //KEEP MUTATIONS
+    //
+    setKeeps(state, keepArr) {
+      state.keeps = keepArr
     }
   },
   actions: {
@@ -74,7 +84,17 @@ export default new Vuex.Store({
     getKeeps({dispatch, commit}, num){
       api.get(`keeps/${num}`)
         .then(res => {
+          commit('setKeeps', res.data)
+        })
+        .catch(e => console.log(e))
+    },
+    deleteKeep({dispatch, commit}, payload){
+      api.delete("keeps", payload)
+        .then(res => {
           console.log(res)
+        })
+        .catch(e => {
+          console.log('error:', e)
         })
     }
   }
