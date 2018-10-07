@@ -12,8 +12,11 @@ namespace keepr.Repositories
         //GET SOME KEEPS, not all bc faster load times
         public IEnumerable<Keep> GetSomePublic(int num)
         {
+            int rangeL = 25 * num + 1;
+            num++;
+            int rangeH = 25 * num;
             return _db.Query<Keep>($@"SELECT * FROM keeps
-            WHERE id <= @rangeH;", new { rangeL = 25 * num + 1, rangeH = 25 * num++ });
+            WHERE id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH});
         }
         //Post a Keep
         public Keep Create(Keep keep)
