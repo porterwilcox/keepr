@@ -16,7 +16,7 @@ namespace keepr.Repositories
             num++;
             int rangeH = 25 * num;
             return _db.Query<Keep>($@"SELECT * FROM keeps
-            WHERE id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH});
+            WHERE isPrivate IS NULL AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH});
         }
         //Post a Keep
         public Keep Create(Keep keep)
