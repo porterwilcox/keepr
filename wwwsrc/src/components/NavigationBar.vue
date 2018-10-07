@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar color="cyan lighten-3">
+    <v-toolbar scroll-toolbar-off-screen color="cyan lighten-3">
         <v-btn flat href="#" icon> <!-- route to top of page -->
             <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
         </v-btn>
