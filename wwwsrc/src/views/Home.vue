@@ -14,6 +14,7 @@ import NavigationBar from "@/components/NavigationBar";
       if (!this.$store.state.user.id) {
         this.$router.push({ name: "login" });
       }
+      this.$store.dispatch("getKeeps", 0) //will have to increment argument. maybe in store is better idea anyway
     },
     components: {
       NavigationBar

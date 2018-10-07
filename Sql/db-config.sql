@@ -25,7 +25,7 @@
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
 --     img VARCHAR(255),
---     isPrivate TINYINT,
+--     isPrivate BIT,
 --     views INT DEFAULT 0,
 --     shares INT DEFAULT 0,
 --     keeps INT DEFAULT 0,
@@ -35,6 +35,7 @@
 --         ON DELETE CASCADE,  
 --     PRIMARY KEY (id)
 -- );
+
 
 -- CREATE TABLE vaultkeeps (
 --     id int NOT NULL AUTO_INCREMENT,

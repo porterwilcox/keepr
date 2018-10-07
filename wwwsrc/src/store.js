@@ -24,6 +24,7 @@ export default new Vuex.Store({
   mutations: {
     setUser(state, user) {
       state.user = user
+      console.log(user)
     }
   },
   actions: {
@@ -65,6 +66,15 @@ export default new Vuex.Store({
         .then(res => {
           if (!res.data) { return }
           router.push({name: 'login'})
+        })
+    },
+    //
+    //Keeps
+    //
+    getKeeps({dispatch, commit}, num){
+      api.get(`keeps/${num}`)
+        .then(res => {
+          console.log(res)
         })
     }
   }
