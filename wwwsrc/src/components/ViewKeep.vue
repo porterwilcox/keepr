@@ -5,11 +5,26 @@
             <v-card v-if="keep.img.length > 0" width="80vw" height="80vh">
                 <v-toolbar card color="cyan lighten-4">
                     <v-layout column fill-height justify-center align-start>
-                        <v-card-title class="img-title">{{keep.name}}</v-card-title>
                         <v-btn flat small>{{author.username}}</v-btn>
+                        <v-card-title class="img-title">{{keep.name}}</v-card-title>
                     </v-layout>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
+                        <v-speed-dial v-model="shareExpand" direction="left" transition="slide-x-reverse-transition">
+                            <v-btn slot="activator" v-model="shareExpand" color="amber darken-3" fab>
+                                <v-icon>fa-share</v-icon>
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="black" class="white--text">
+                                <v-icon>fab fa-twitter</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="#e62774">
+                                <v-icon>fab fa-instagram</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="blue">
+                                <v-icon>fab fa-facebook-f</v-icon>
+                            </v-btn>
+                        </v-speed-dial>
                         <v-chip outline color="amber darken-4">
                             {{keep.views}}<v-icon right>fa-eye</v-icon>
                         </v-chip>
@@ -20,11 +35,26 @@
             <v-card v-else width="40vw" height="fit-content">
                 <v-toolbar card color="cyan lighten-4">
                     <v-layout column fill-height justify-center align-start>
-                        <v-card-title class="img-title">{{keep.name}}</v-card-title>
                         <v-btn flat small>{{author.username}}</v-btn>
+                        <v-card-title class="img-title">{{keep.name}}</v-card-title>
                     </v-layout>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
+                        <v-speed-dial v-model="shareExpand" direction="left" transition="slide-x-reverse-transition">
+                            <v-btn slot="activator" v-model="shareExpand" color="amber darken-3" fab>
+                                <v-icon>fa-share</v-icon>
+                                <v-icon>close</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="black" class="white--text">
+                                <v-icon>fab fa-twitter</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="#e62774">
+                                <v-icon>fab fa-instagram</v-icon>
+                            </v-btn>
+                            <v-btn fab small color="blue">
+                                <v-icon>fab fa-facebook-f</v-icon>
+                            </v-btn>
+                        </v-speed-dial>
                         <v-chip outline color="amber darken-4">
                             {{keep.views}}<v-icon right>fa-eye</v-icon>
                         </v-chip>
@@ -39,7 +69,8 @@ export default {
   name: "viewKeep",
   data() {
     return {
-      viewKeep: false
+      viewKeep: false,
+      shareExpand: false
     };
   },
   props: ["keep"],
@@ -50,7 +81,6 @@ export default {
   },
   methods: {
     getAuthor(userId) {
-      console.log(userId);
       this.$store.dispatch("getAuthor", userId);
     }
   }

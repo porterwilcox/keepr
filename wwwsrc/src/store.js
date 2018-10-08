@@ -116,20 +116,22 @@ export default new Vuex.Store({
     //
     //Keeps
     //
-    getKeeps({dispatch, commit}, id){
-      if (id == "first") {
+    getKeeps({dispatch, commit, state}, id){
+      if (id == "first" && !state.keeps.length) {
         api.get('keeps')
           .then(res => {
             commit('setKeeps', res.data)
           })
           .catch(e => console.log(e))
-          return
       }
-      api.get(`keeps/${id}`)
-        .then(res => {
-          commit('setKeeps', res.data)
-        })
-        .catch(e => console.log(e))
+      // else if (typeof id == "number") {
+      else {
+        api.get(`keeps/${id}`)
+          .then(res => {
+            commit('setKeeps', res.data)
+          })
+          .catch(e => console.log(e))
+      }
     },
     deleteKeep({dispatch, commit}, payload){
       api.delete("keeps", payload)

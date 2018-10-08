@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar fixed color="cyan lighten-3">
+    <v-toolbar app fixed color="cyan">
         <v-btn flat href="#" icon> <!-- route to top of page -->
             <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
         </v-btn>
@@ -9,18 +9,20 @@
         <v-toolbar-title ml-5>keepr</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items v-if="user.id">
-            <v-btn flat >
-                new keep
-            </v-btn>
-            <v-btn flat >
-                my vaults
-            </v-btn>
-            <v-btn icon>
-                <v-icon>fas fa-user</v-icon>
-            </v-btn>
-            <v-btn icon @click="logout()">
-                <v-icon>fa-sign-out-alt</v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+                <create-keep slot="activator" />
+                <span>Create a Keep</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <profile slot="activator" />
+                <span>View Profile</span>
+            </v-tooltip>
+            <v-tooltip bottom>
+                <v-btn slot="activator" flat fab @click="logout()">
+                    <v-icon>fa-sign-out-alt</v-icon>
+                </v-btn>
+                <span>Logout</span>
+            </v-tooltip>
         </v-toolbar-items>
         <v-toolbar-items v-else>
             <v-layout full-height align-center>
@@ -30,6 +32,8 @@
     </v-toolbar>    
 </template>
 <script>
+import CreateKeep from '@/components/CreateKeep'
+import Profile from '@/components/Profile'
 export default {
     name: "navigationBar",
     data(){
@@ -41,6 +45,10 @@ export default {
         user() {
             return this.$store.state.user
         }
+    },
+    components: {
+        CreateKeep,
+        Profile
     },
     methods: {
         logout()

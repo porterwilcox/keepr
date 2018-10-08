@@ -11,8 +11,23 @@
         <v-card-actions :id="keep.id" class="buttons"> 
             <!-- <v-btn flat fab small color="amber darken-4">view</v-btn> -->
             <view-keep :keep="keep"/>
-            <v-btn flat fab small color="amber darken-4">share</v-btn>
             <v-btn flat fab small color="amber darken-4">keep</v-btn> 
+            <!-- <v-btn flat fab small color="amber darken-4">share</v-btn> -->
+            <v-speed-dial v-model="shareExpand" direction="right" transition="slide-y-reverse-transition">
+                <v-btn slot="activator" v-model="shareExpand" color="amber darken-4" fab flat small>
+                    <v-icon>fa-share</v-icon>
+                    <v-icon>close</v-icon>
+                </v-btn>
+                <v-btn fab small color="blue">
+                    <v-icon>fab fa-facebook-f</v-icon>
+                </v-btn>
+                <v-btn fab small color="#e62774">
+                    <v-icon>fab fa-instagram</v-icon>
+                </v-btn>
+                <v-btn fab small color="black" class="white--text">
+                    <v-icon>fab fa-twitter</v-icon>
+                </v-btn>
+            </v-speed-dial>
         </v-card-actions>
     </v-card>     
 </template>
@@ -20,6 +35,11 @@
 import ViewKeep from '@/components/ViewKeep'
 export default {
     name: "keeps",
+    data() {
+        return {
+        shareExpand: false
+        }
+    },
     props: ["keep"],
     components: {
         ViewKeep
@@ -30,6 +50,7 @@ export default {
         },
         hideActions(id) {
             $(`#${id}`).css({"display": "none"})
+            this.shareExpand = false
         }
     }    
 }
