@@ -1,5 +1,5 @@
 <template>
-    <v-toolbar scroll-toolbar-off-screen color="cyan lighten-3">
+    <v-toolbar fixed color="cyan lighten-3">
         <v-btn flat href="#" icon> <!-- route to top of page -->
             <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
         </v-btn>
@@ -8,7 +8,7 @@
         </v-toolbar-items>
         <v-toolbar-title ml-5>keeper</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-toolbar-items>
+        <v-toolbar-items v-if="user.id">
             <v-btn flat >
                 new keep
             </v-btn>
@@ -22,6 +22,11 @@
                 <v-icon>fa-sign-out-alt</v-icon>
             </v-btn>
         </v-toolbar-items>
+        <v-toolbar-items>
+            <v-layout full-height align-center>
+                <router-link :to="{name: 'login', params: {signUp: true}}">create accout</router-link>
+            </v-layout>
+        </v-toolbar-items>
     </v-toolbar>    
 </template>
 <script>
@@ -30,6 +35,11 @@ export default {
     data(){
         return {
             search: ""
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.state.user
         }
     },
     methods: {

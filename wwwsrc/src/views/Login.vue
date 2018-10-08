@@ -39,6 +39,7 @@
                             </form>
                         </v-card>
                     </div>
+                    <router-link :to="{name: 'home', params: {browsing: true}}">I want to browse keepr without an account.</router-link>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -51,6 +52,9 @@
         mounted() {
             //checks for valid session
             this.$store.dispatch("authenticate");
+            if (this.signUp) {
+                this.loginForm = false;
+            }
         },
         data() {
             return {
@@ -68,6 +72,7 @@
                 passwordsMatch: false
             };
         },
+        props: ["signUp"],
         methods: {
             passwordConfirm() {
                 if (this.newUser.password == this.newUser.password2) {
