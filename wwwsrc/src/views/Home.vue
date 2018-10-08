@@ -22,13 +22,15 @@ export default {
   props: ["browsing"],
   mounted() {
     //blocks users not logged in
-    if (!this.$store.state.user.id) {
-      if (this.browsing) {
-        console.log("props as bools work")
-        return this.$store.dispatch("getKeeps", "first");
+    if (!this.$store.state.keeps.length) {
+      if (!this.$store.state.user.id) {
+        if (this.browsing) {
+          console.log("props as bools work")
+          return this.$store.dispatch("getKeeps", "first");
+        }
       }
+      this.$store.dispatch("getKeeps", "first");
     }
-    this.$store.dispatch("getKeeps", "first");
   },
   computed: {
     keeps() {

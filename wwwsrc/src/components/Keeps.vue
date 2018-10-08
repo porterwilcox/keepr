@@ -9,16 +9,21 @@
         <v-card-title v-if="keep.img.length < 1">{{keep.name}}</v-card-title>
         <v-card-text>{{keep.description}}</v-card-text>
         <v-card-actions :id="keep.id" class="buttons"> 
-            <v-btn flat fab small color="amber darken-4">view</v-btn>
+            <!-- <v-btn flat fab small color="amber darken-4">view</v-btn> -->
+            <view-keep :keep="keep"/>
             <v-btn flat fab small color="amber darken-4">share</v-btn>
             <v-btn flat fab small color="amber darken-4">keep</v-btn> 
         </v-card-actions>
     </v-card>     
 </template>
 <script>
+import ViewKeep from '@/components/ViewKeep'
 export default {
     name: "keeps",
     props: ["keep"],
+    components: {
+        ViewKeep
+    },
     methods: {
         showActions(id) {
             $(`#${id}`).css({"display": "flex"})

@@ -6,7 +6,7 @@
         <v-toolbar-items>
             <v-text-field prepend-inner-icon="search" single-line clearable v-model="search" placeholder="search keeps"></v-text-field>
         </v-toolbar-items>
-        <v-toolbar-title ml-5>keeper</v-toolbar-title>
+        <v-toolbar-title ml-5>keepr</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items v-if="user.id">
             <v-btn flat >

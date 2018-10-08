@@ -19,13 +19,15 @@ let api = Axios.create({
 
 const initialState = {
   user: {},
-  keeps: []
+  keeps: [],
+  author: {}
 }
 
 export default new Vuex.Store({
   state: {
     user: {},
-    keeps: []
+    keeps: [],
+    author: {}
   },
   mutations: {
     resetState(state, payload) {
@@ -41,6 +43,9 @@ export default new Vuex.Store({
     setUser(state, user) {
       state.user = user
       console.log(user)
+    },
+    setAuthor(state, author) {
+      state.author = author
     },
     //
     //KEEP MUTATIONS
@@ -99,6 +104,14 @@ export default new Vuex.Store({
           commit('resetState', initialState)
           router.push({name: 'login', params: {signUp: "true"}})
         })
+    },
+    //GET AUTHOR INFO
+    getAuthor({commit}, userId) {
+      auth.get(`${userId}`)
+        .then(res => {
+          commit('setAuthor', res.data)
+        })
+        .catch(e => console.log(e))
     },
     //
     //Keeps
