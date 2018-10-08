@@ -12,10 +12,16 @@ namespace keepr.Controllers
     {
         KeepsRepository _repo;
 
-        [HttpGet("{num}")]
-        public IEnumerable<Keep> Get([FromRoute] int num)
+        [HttpGet]
+        public IEnumerable<Keep> Get()
         {
-            return _repo.GetSomePublic(num);
+            return _repo.GetSomePublic();
+        }
+
+        [HttpGet("{id}")]
+        public IEnumerable<Keep> Get([FromRoute] int id)
+        {
+            return _repo.GetSomePublic(id);
         }
 
         [HttpPost]

@@ -11,14 +11,28 @@ namespace keepr.Repositories
         IDbConnection _db;
 
         //GET SOME KEEPS, not all bc faster load times
-        public IEnumerable<Keep> GetSomePublic(int num)
+        public IEnumerable<Keep> GetSomePublic()
         {
-            int rangeL = 25 * num + 1;
-            num++;
-            int rangeH = 25 * num;
-            return _db.Query<Keep>($@"SELECT * FROM keeps
-            WHERE isPrivate = 0 AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH });
+            return _db.Query<Keep>(@"SELECT * FROM keeps
+            WHERE isPrivate = 0
+            ORDER BY id DESC
+            LIMIT 28;");
         }
+        public IEnumerable<Keep> GetSomePublic(int id)
+        {
+            return _db.Query<Keep>($@"SELECT * FROM keeps
+            WHERE isPrivate = 0 AND id < @id
+            ORDER BY id DESC
+            LIMIT 28;", new { id });
+        }
+        // public IEnumerable<Keep> GetSomePublic(int num)
+        // {
+        //     int rangeL = 25 * num + 1;
+        //     num++;
+        //     int rangeH = 25 * num;
+        //     return _db.Query<Keep>($@"SELECT * FROM keeps
+        //     WHERE isPrivate = 0 AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH });
+        // }
         //Post a Keep
         public Keep Create(Keep keep)
         {

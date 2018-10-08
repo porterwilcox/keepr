@@ -17,12 +17,24 @@ let api = Axios.create({
   withCredentials: true
 })
 
+const initialState = {
+  user: {},
+  keeps: []
+}
+
 export default new Vuex.Store({
   state: {
     user: {},
     keeps: []
   },
   mutations: {
+    resetState(state, payload) {
+      let keys = Object.keys(payload)
+      let values = Object.values(payload)
+      for (let i = 0; i < values.length; i++) {
+        state[keys[i]] = values[i]
+      }
+    },
     //
     //USER MUTATIONS
     //
@@ -34,7 +46,8 @@ export default new Vuex.Store({
     //KEEP MUTATIONS
     //
     setKeeps(state, keepArr) {
-      state.keeps = keepArr
+      let arr = state.keeps.concat(keepArr)
+      state.keeps = arr
     }
   },
   actions: {
@@ -71,18 +84,35 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
-    logout({}) {
+    logout({commit}) {
       auth.delete("logout")
         .then(res => {
           if (!res.data) { return }
+          commit('resetState', initialState)
           router.push({name: 'login'})
+        })
+    },
+    createAccount({commit}) {
+      auth.delete("logout")
+        .then(res => {
+          if (!res.data) { return }
+          commit('resetState', initialState)
+          router.push({name: 'login', params: {signUp: "true"}})
         })
     },
     //
     //Keeps
     //
-    getKeeps({dispatch, commit}, num){
-      api.get(`keeps/${num}`)
+    getKeeps({dispatch, commit}, id){
+      if (id == "first") {
+        api.get('keeps')
+          .then(res => {
+            commit('setKeeps', res.data)
+          })
+          .catch(e => console.log(e))
+          return
+      }
+      api.get(`keeps/${id}`)
         .then(res => {
           commit('setKeeps', res.data)
         })

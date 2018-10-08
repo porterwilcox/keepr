@@ -6,12 +6,11 @@
                     <div class="login">
                         <v-card v-if="loginForm" >
                             <v-toolbar card color="cyan lighten-3">
-                                <v-toolbar-title>
-                                    <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
-                                </v-toolbar-title>
+                                <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
+                                <v-toolbar-title>Login</v-toolbar-title>
                                  <v-spacer></v-spacer>
-                                <v-btn @click="loginForm = !loginForm">
-                                    sign up
+                                <v-btn flat round @click="loginForm = !loginForm" class="white--text">
+                                    or sign up
                                 </v-btn>
                             </v-toolbar>
                             <form @submit.prevent="loginUser">
@@ -22,12 +21,11 @@
                         </v-card>
                         <v-card v-else>
                             <v-toolbar card>
-                                <v-toolbar-title>
-                                    <v-icon color="cyan lighten-3" large>fab fa-korvue</v-icon>
-                                </v-toolbar-title>
+                                <v-icon color="cyan lighten-3" large>fab fa-korvue</v-icon>
+                                <v-toolbar-title>Create Accout</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="cyan lighten-3" @click="loginForm = !loginForm">
-                                    sign in
+                                <v-btn flat round @click="loginForm = !loginForm" class="cyan--text">
+                                    or login
                                 </v-btn>
                             </v-toolbar>
                             <form @submit.prevent="register">
@@ -39,7 +37,9 @@
                             </form>
                         </v-card>
                     </div>
-                    <router-link :to="{name: 'home', params: {browsing: true}}">I want to browse keepr without an account.</router-link>
+                    <v-layout pt-3>
+                        <router-link :to="{name: 'home', params: {browsing: true}}" class="cyan--text">I want to browse keepr without an account.</router-link>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -52,7 +52,7 @@
         mounted() {
             //checks for valid session
             this.$store.dispatch("authenticate");
-            if (this.signUp) {
+            if (this.signUp == "true") {
                 this.loginForm = false;
             }
         },

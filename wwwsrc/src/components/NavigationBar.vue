@@ -22,9 +22,9 @@
                 <v-icon>fa-sign-out-alt</v-icon>
             </v-btn>
         </v-toolbar-items>
-        <v-toolbar-items>
+        <v-toolbar-items v-else>
             <v-layout full-height align-center>
-                <router-link :to="{name: 'login', params: {signUp: true}}">create accout</router-link>
+                <v-btn flat round large @click="createAccount()" class="white--text">create accout</v-btn>
             </v-layout>
         </v-toolbar-items>
     </v-toolbar>    
@@ -34,7 +34,7 @@ export default {
     name: "navigationBar",
     data(){
         return {
-            search: ""
+            search: "",
         }
     },
     computed: {
@@ -46,6 +46,9 @@ export default {
         logout()
         {
             this.$store.dispatch("logout")
+        },
+        createAccount() {
+            this.$store.dispatch("createAccount")
         }
     }
 }

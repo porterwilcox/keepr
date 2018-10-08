@@ -1,15 +1,16 @@
 <template>
   <div class="home">
     <navigation-bar />
-    <v-content>
-        <v-container ma-5>
-            <v-layout justify-flex-start align-flex-bottom wrap>
-                <v-flex xs12 sm12 md3 pa-1 v-for="keep in keeps" :key="keep.id">
-                  <keeps :keep="keep" />
-                </v-flex>
-            </v-layout>
-        </v-container>
-    </v-content>
+    <v-container ma-5>
+        <v-layout justify-flex-start align-flex-bottom wrap>
+            <v-flex xs12 sm12 md3 pa-1 v-for="keep in keeps" :key="keep.id">
+              <keeps :keep="keep" />
+            </v-flex>
+        </v-layout>
+        <v-layout justify-center>
+          <v-btn color="cyan lighten-3" class="white--text" @click="getKeeps(keeps[keeps.length-1].id)">load more</v-btn>
+        </v-layout>
+    </v-container>
   </div>
 </template>
 
@@ -22,9 +23,12 @@ export default {
   mounted() {
     //blocks users not logged in
     if (!this.$store.state.user.id) {
-      this.justBrowsing();
+      if (this.browsing) {
+        console.log("props as bools work")
+        return this.$store.dispatch("getKeeps", "first");
+      }
     }
-    this.$store.dispatch("getKeeps", 0); //will have to increment argument. maybe in store is better idea anyway
+    this.$store.dispatch("getKeeps", "first");
   },
   computed: {
     keeps() {
@@ -36,9 +40,8 @@ export default {
     Keeps
   },
   methods: {
-    justBrowsing() {
-      if (this.browsing) {return}
-      this.$router.push({ name: "login" });
+    getKeeps(id) {
+      this.$store.dispatch("getKeeps", id)
     }
   }
 };
