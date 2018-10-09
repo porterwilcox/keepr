@@ -53,6 +53,9 @@ export default new Vuex.Store({
     setKeeps(state, keepArr) {
       let arr = state.keeps.concat(keepArr)
       state.keeps = arr
+    },
+    addKeep(state, keep) {
+      state.keeps.unshift(keep)
     }
   },
   actions: {
@@ -141,6 +144,14 @@ export default new Vuex.Store({
         .catch(e => {
           console.log('error:', e)
         })
+    },
+    postKeep({commit}, keep) {
+      api.post('keeps', keep)
+        .then(res => {
+          console.log("inserted keep into db!")
+          commit("addKeep", res.data)
+        })
+        .catch(e => console.log("ERROR", e))
     }
   }
 })

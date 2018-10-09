@@ -12,6 +12,3 @@ export default {
     name: 'bottomBar'
 }
 </script>
-<style>
-
-</style>
