@@ -2,7 +2,7 @@
   <div class="home">
     <navigation-bar />
     <v-container mt-5 pb-5>
-        <v-layout justify-flex-start align-flex-bottom wrap>
+        <v-layout align-center wrap>
             <v-flex xs12 sm12 md3 pa-1 v-for="keep in keeps" :key="keep.id">
               <keeps :keep="keep" />
             </v-flex>
@@ -10,7 +10,7 @@
         <v-layout v-if="lastGetCount == 28" justify-center pt-5 mt-5>
           <v-btn round color="cyan lighten-3" class="white--text" @click="getKeeps(keeps[keeps.length-1].id)">load more</v-btn round>
         </v-layout>
-        <v-layout v-else justify-center pt-5 mt-5>
+        <v-layout v-else justify-center mt-5>
           <v-chip v-model="caughtUp" color="cyan" outline close>You're all caught up!</v-chip>
         </v-layout>
     </v-container>

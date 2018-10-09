@@ -18,7 +18,7 @@
                     <v-checkbox slot="activator" v-model="newKeep.isPrivate" label="Private" color="amber darken-4"></v-checkbox>
                     <v-tooltip right>
                         <v-icon class="mt-4" slot="activator" small>far fa-question-circle</v-icon>
-                        <span>Private keeps can only be viewed by other Keepr users.<br>Public keeps can be viewed by those who're just browsing Keepr.</span>
+                        <span>Private keeps can only be viewed by other Keepr users.<br>Public keeps can be viewed by anyone who's browsing Keepr.</span>
                     </v-tooltip>
                 </v-layout>
                 <v-checkbox @change="validate()" v-model="hasImage" label="Include Image" color="amber darken-4"></v-checkbox>

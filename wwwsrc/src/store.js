@@ -20,6 +20,7 @@ let api = Axios.create({
 const initialState = {
   user: {},
   keeps: [],
+  usersKeeps: [],
   author: {},
   lastGetCount: 0
 }
@@ -28,6 +29,7 @@ export default new Vuex.Store({
   state: {
     user: {},
     keeps: [],
+    usersKeeps: [],
     author: {},
     lastGetCount: 0
   },
@@ -59,6 +61,25 @@ export default new Vuex.Store({
     },
     addKeep(state, keep) {
       state.keeps.unshift(keep)
+    },
+    setUsersKeeps(state, usersKeeps) {
+      state.usersKeeps = usersKeeps
+    },
+    removeKeep(state, id) {
+      for (let i = 0; i < state.keeps.length; i++) {
+        let keep = state.keeps[i]
+        if (keep.id == id) {
+          state.keeps.splice(i, 1)
+          break;
+        }
+      }
+      for (let i = 0; i < state.usersKeeps.length; i++) {
+        let keep = state.usersKeeps[i]
+        if (keep.id == id) {
+          state.usersKeeps.splice(i, 1)
+          break;
+        }
+      }
     }
   },
   actions: {
@@ -95,24 +116,24 @@ export default new Vuex.Store({
           console.log('Login Failed')
         })
     },
-    logout({commit}) {
+    logout({ commit }) {
       auth.delete("logout")
         .then(res => {
           if (!res.data) { return }
           commit('resetState', initialState)
-          router.push({name: 'login'})
+          router.push({ name: 'login' })
         })
     },
-    createAccount({commit}) {
+    createAccount({ commit }) {
       auth.delete("logout")
         .then(res => {
           if (!res.data) { return }
           commit('resetState', initialState)
-          router.push({name: 'login', params: {signUp: "true"}})
+          router.push({ name: 'login', params: { signUp: "true" } })
         })
     },
     //GET AUTHOR INFO
-    getAuthor({commit}, userId) {
+    getAuthor({ commit }, userId) {
       auth.get(`${userId}`)
         .then(res => {
           commit('setAuthor', res.data)
@@ -122,7 +143,7 @@ export default new Vuex.Store({
     //
     //Keeps
     //
-    getKeeps({dispatch, commit, state}, id){
+    getKeeps({ dispatch, commit, state }, id) {
       if (id == "first" && !state.keeps.length) {
         api.get('keeps')
           .then(res => {
@@ -139,17 +160,26 @@ export default new Vuex.Store({
           .catch(e => console.log(e))
       }
     },
-    deleteKeep({dispatch, commit}, payload){
-      console.log(payload)
-      api.delete('keeps', payload)
+    getUsersKeeps({ commit }, userId) {
+      api.get(`keeps/byUser/${userId}`)
         .then(res => {
-          console.log(res)
+          commit("setUsersKeeps", res.data)
+        })
+        .catch(e => console.log(e))
+    },
+    deleteKeep({ commit }, payload) {
+      api.delete('keeps', { data: payload })
+        .then(res => {
+          if (res.data) {
+            return commit("removeKeep", payload.id)
+          }
+          console.log("error: unsuccessful delete")
         })
         .catch(e => {
           console.log('error:', e)
         })
     },
-    postKeep({commit}, keep) {
+    postKeep({ commit }, keep) {
       api.post('keeps', keep)
         .then(res => {
           console.log("inserted keep into db!")

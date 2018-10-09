@@ -25,6 +25,14 @@ namespace keepr.Repositories
             ORDER BY id DESC
             LIMIT 28;", new { id });
         }
+        public IEnumerable<Keep> GetUsersKeeps(string userId)
+        {
+            return _db.Query<Keep>(@"SELECT * FROM keeps
+            WHERE userId = @userId
+            ORDER BY id DESC;", new { userId });
+        }
+
+
         // public IEnumerable<Keep> GetSomePublic(int num)
         // {
         //     int rangeL = 25 * num + 1;

@@ -25,6 +25,12 @@ namespace keepr.Controllers
             return _repo.GetSomePublic(id);
         }
 
+        [HttpGet("byUser/{userId}")]
+        public IEnumerable<Keep> Get([FromRoute] string userId)
+        {
+            return _repo.GetUsersKeeps(userId);
+        }
+
         [HttpPost]
         public Keep Post([FromBody] Keep rawKeep)
         {
