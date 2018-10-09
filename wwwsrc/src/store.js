@@ -20,14 +20,16 @@ let api = Axios.create({
 const initialState = {
   user: {},
   keeps: [],
-  author: {}
+  author: {},
+  lastGetCount: 0
 }
 
 export default new Vuex.Store({
   state: {
     user: {},
     keeps: [],
-    author: {}
+    author: {},
+    lastGetCount: 0
   },
   mutations: {
     resetState(state, payload) {
@@ -53,6 +55,7 @@ export default new Vuex.Store({
     setKeeps(state, keepArr) {
       let arr = state.keeps.concat(keepArr)
       state.keeps = arr
+      state.lastGetCount = keepArr.length
     },
     addKeep(state, keep) {
       state.keeps.unshift(keep)
@@ -137,7 +140,8 @@ export default new Vuex.Store({
       }
     },
     deleteKeep({dispatch, commit}, payload){
-      api.delete("keeps", payload)
+      console.log(payload)
+      api.delete('keeps', payload)
         .then(res => {
           console.log(res)
         })

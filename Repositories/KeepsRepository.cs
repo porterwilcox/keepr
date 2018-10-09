@@ -45,9 +45,9 @@ namespace keepr.Repositories
             return keep;
         }
         //Delete a Keep
-        public bool Delete(KeepToDelete payload)
+        public bool Delete(int id)
         {
-            int successfulDelete = _db.Execute("DELETE FROM keeps WHERE id = @Id", payload);
+            int successfulDelete = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
             if (successfulDelete != 1) return false;
             return true;
         }

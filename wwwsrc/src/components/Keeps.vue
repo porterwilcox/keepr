@@ -26,6 +26,10 @@
                     <v-icon>fab fa-twitter</v-icon>
                 </v-btn>
             </v-speed-dial>
+            <v-spacer></v-spacer>
+            <v-btn v-if="keep.userId == user.id" @click="deleteKeep(keep.id, keep.userId)" fab flat small color="amber darken-4">
+                    <v-icon>fas fa-trash-alt</v-icon>
+                </v-btn>
         </v-card-actions>
     </v-card>     
 </template>
@@ -42,6 +46,11 @@ export default {
     components: {
         ViewKeep
     },
+    computed: {
+        user() {
+            return this.$store.state.user
+        }
+    },
     methods: {
         showActions(id) {
             $(`#${id}`).css({"display": "flex"})
@@ -49,6 +58,14 @@ export default {
         hideActions(id) {
             $(`#${id}`).css({"display": "none"})
             this.shareExpand = false
+        },
+        deleteKeep(keepId, authorId) {
+            let k = {
+                id: keepId,
+                userId: authorId,
+                sendingUserId: this.user.id
+            }
+            this.$store.dispatch("deleteKeep", k)
         }
     }    
 }

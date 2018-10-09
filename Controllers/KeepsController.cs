@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using keepr.Models;
 using keepr.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
@@ -33,12 +34,13 @@ namespace keepr.Controllers
             return keep;
         }
 
+        // [Authorize]
         [HttpDelete]
         public bool Delete([FromBody] KeepToDelete payload)
         {
             if (!ModelState.IsValid) throw new Exception("Invalid information sent.");
             if (payload.UserId != payload.SendingUserId) throw new Exception("You cannot delete a keep you didn't author.");
-            return _repo.Delete(payload);
+            return _repo.Delete(payload.Id);
         }
 
         public KeepsController(KeepsRepository repo)
