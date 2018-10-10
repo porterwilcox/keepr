@@ -1,41 +1,41 @@
 <template>
-    <div @mouseenter="showDelete(vault.id)" @mouseleave="hideDelete(vault.id)">
+    <v-flex @mouseenter="showDelete(vault.id)" @mouseleave="hideDelete(vault.id)">
         <v-card v-if="!(i % 3)" color="light-blue darken-3" width="20vw" height="10vw">
-            <v-toolbar height="1vh" absolute card color="light-blue darken-3">
+            <v-toolbar height="0vh" absolute card>
                 <v-spacer></v-spacer>
                 <v-btn @click="deleteVault(vault.id)" :id="'vault'+vault.id" icon class="mt-5 buttons">
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-layout fill-height column align-center justify-center>
+            <v-layout fill-height column align-center justify-space-around>
                 <h1 class="white--text">{{vault.name}}</h1>
                 <h2>{{vault.description}}</h2>
             </v-layout>
         </v-card>
         <v-card v-else-if="!(i % 2)" color="cyan darken-3" width="20vw" height="10vw">
-            <v-toolbar height="1vh" absolute card color="cyan darken-3">
+            <v-toolbar height="0vh" absolute card>
                 <v-spacer></v-spacer>
                 <v-btn @click="deleteVault(vault.id)" :id="'vault'+vault.id" icon class="mt-5 buttons">
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-layout fill-height column align-center justify-center>
+            <v-layout fill-height column align-center justify-space-around>
                 <h1 class="white--text">{{vault.name}}</h1>
                 <h2>{{vault.description}}</h2>
             </v-layout>        </v-card>
         <v-card v-else color="teal darken-3" width="20vw" height="10vw">
-            <v-toolbar height="1vh" absolute card color="teal darken-3">
+            <v-toolbar height="0vh" absolute card>
                 <v-spacer></v-spacer>
                 <v-btn @click="deleteVault(vault.id)" :id="'vault'+vault.id" icon class="mt-5 buttons">
                     <v-icon>delete</v-icon>
                 </v-btn>
             </v-toolbar>
-            <v-layout fill-height column align-center justify-center>
+            <v-layout fill-height column align-center justify-space-around>
                 <h1 class="white--text">{{vault.name}}</h1>
                 <h2>{{vault.description}}</h2>
             </v-layout>
         </v-card>
-    </div>
+    </v-flex>
 </template>
 <script>
 export default {
