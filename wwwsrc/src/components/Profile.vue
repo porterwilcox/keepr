@@ -24,9 +24,10 @@
                 </v-expansion-panel>
                 <h2 class="pa-3 mt-5">your vaults</h2>
                 <v-layout fill-height justify-start align-start wrap>
-                    <v-flex pa-1 v-for="(vault, index) in usersVaults" :key="vault.id">
-                        <vaults :vault="vault" :i="index + 3" />
+                    <v-flex xs12 sm6 md3 lg3 pa-1 v-for="(vault, index) in usersVaults" :key="vault.id">
+                        <vaults :vault="vault" :i="index + 3" :user="user" />
                     </v-flex>
+                    <!-- this is the create a vault square -->
                     <v-flex pa-1>
                         <v-card color="amber darken-4" width="20vw" height="10vw">
                             <v-layout v-if="!createVault" fill-height column align-center justify-center>
@@ -35,12 +36,19 @@
                                     <v-icon large color="">fas fa-plus-circle</v-icon>
                                 </v-btn>
                             </v-layout>
-                            <v-layout v-else fill-height column align-center justify-space-between>
-                                <form class="mt-3">
-                                    <v-text-field color="cyan lighten-3" single-line clearable v-model="newVault.name" label="name"></v-text-field>                                    
+                            <v-layout v-else fill-height column align-center justify-center>
+                                <form>
+                                    <v-card v-if="!showDescription" raised color="orange" class="pl-2 pr-2 mt-2">
+                                        <v-text-field v-if="newVault.name.length < 1" color="cyan lighten-3" single-line v-model="newVault.name" label="name"></v-text-field>                                    
+                                        <v-text-field v-else append-icon="fas fa-forward" @click:append="showDescription = !showDescription" color="cyan lighten-3" single-line v-model="newVault.name"></v-text-field>                                    
+                                    </v-card>
+                                    <v-card v-else raised color="orange" class="pl-2 pr-2 mt-2">
+                                        <v-text-field v-if="newVault.description.length < 1" prepend-icon="fas fa-backward" @click:prepend="showDescription = !showDescription" color="cyan lighten-3" single-line v-model="newVault.description" label="description"></v-text-field>                                    
+                                        <v-text-field v-else append-icon="fas fa-share-square" @click:append="submitVault()" prepend-icon="fas fa-backward" @click:prepend="showDescription = !showDescription" color="cyan lighten-3" single-line v-model="newVault.description"></v-text-field>                                    
+                                    </v-card>
                                 </form>
                                 <div>
-                                    <v-btn @click="createVault = !createVault" fab small color="amber darken-3">
+                                    <v-btn @click="createVault = !createVault" fab small color="orange darken-3">
                                         <v-icon>close</v-icon>
                                     </v-btn>
                                 </div>
@@ -61,8 +69,10 @@
             return {
                 showProfile: false,
                 createVault: false,
+                showDescription: false,
                 newVault: {
-                    name: ""
+                    name: "",
+                    description: ""
                 }
             };
         },
@@ -89,6 +99,18 @@
             closeProfile() {
                 this.showProfile = false;
                 this.$store.commit("setUsersKeeps", []);
+                this.$store.commit("setUsersVaults", []);
+            },
+            submitVault() {
+                let v = this.newVault
+                v.userId = this.user.id
+                this.$store.dispatch("createVault", v)
+                this.createVault = false
+                this.showDescription = false
+                this.newVault = {
+                    name: "",
+                    description: ""
+                }
             }
         }
     };
@@ -100,6 +122,6 @@
 
     #h-exp {
         height: fit-content;
-        z-index: 2;
+        z-index: 1;
     }
 </style>

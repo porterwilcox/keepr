@@ -88,6 +88,18 @@ export default new Vuex.Store({
     //
     setUsersVaults(state, vaultsArr) {
       state.usersVaults = vaultsArr
+    },
+    addVault(state, vault) {
+      state.usersVaults.push(vault)
+    },
+    removeVault(state, id) {
+      for (let i = 0; i < state.usersVaults.length; i++) {
+        let vault = state.usersVaults[i]
+        if (vault.id == id) {
+          state.usersVaults.splice(i, 1)
+          break;
+        }
+      }
     }
   },
   actions: {
@@ -205,6 +217,24 @@ export default new Vuex.Store({
           commit("setUsersVaults", res.data)
         })
         .catch(e => console.log(e))
+    },
+    createVault({commit}, vault) {
+      api.post('vaults', vault)
+        .then(res => {
+          commit("addVault", res.data)
+        })
+    },
+    deleteVault({commit}, vault) {
+      api.delete('vaults', {data: vault})
+        .then(res => {
+          if (res.data) {
+            return commit("removeVault", vault.id)
+          }
+          console.log("error: unsuccessful delete")
+        })
+        .catch(e => {
+          console.log('error:', e)
+        })
     }
   }
 })
