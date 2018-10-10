@@ -16,13 +16,13 @@
                     <v-icon>fa-share</v-icon>
                     <v-icon>close</v-icon>
                 </v-btn>
-                <v-btn fab small color="blue">
+                <v-btn class="ml-2" fab small color="blue">
                     <v-icon>fab fa-facebook-f</v-icon>
                 </v-btn>
-                <v-btn fab small color="#e62774">
+                <v-btn v-if="keep.img.length > 0" fab small color="#e62774">
                     <v-icon>fab fa-instagram</v-icon>
                 </v-btn>
-                <v-btn fab small color="black" class="white--text">
+                <v-btn v-else fab small color="black" class="white--text">
                     <v-icon>fab fa-twitter</v-icon>
                 </v-btn>
             </v-speed-dial>

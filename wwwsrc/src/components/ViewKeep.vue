@@ -15,10 +15,10 @@
                                 <v-icon>fa-share</v-icon>
                                 <v-icon>close</v-icon>
                             </v-btn>
-                            <v-btn fab small color="black" class="white--text">
+                            <v-btn v-if="keep.img.length == 0" fab small color="black" class="white--text">
                                 <v-icon>fab fa-twitter</v-icon>
                             </v-btn>
-                            <v-btn fab small color="#e62774">
+                            <v-btn v-else fab small color="#e62774">
                                 <v-icon>fab fa-instagram</v-icon>
                             </v-btn>
                             <v-btn fab small color="blue">
@@ -45,10 +45,10 @@
                                 <v-icon>fa-share</v-icon>
                                 <v-icon>close</v-icon>
                             </v-btn>
-                            <v-btn fab small color="black" class="white--text">
+                            <v-btn v-if="keep.img.length == 0" fab small color="black" class="white--text">
                                 <v-icon>fab fa-twitter</v-icon>
                             </v-btn>
-                            <v-btn fab small color="#e62774">
+                            <v-btn v-else fab small color="#e62774">
                                 <v-icon>fab fa-instagram</v-icon>
                             </v-btn>
                             <v-btn fab small color="blue">

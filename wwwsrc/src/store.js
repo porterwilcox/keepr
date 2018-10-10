@@ -22,7 +22,8 @@ const initialState = {
   keeps: [],
   usersKeeps: [],
   author: {},
-  lastGetCount: 0
+  lastGetCount: 0,
+  usersVaults: []
 }
 
 export default new Vuex.Store({
@@ -31,7 +32,8 @@ export default new Vuex.Store({
     keeps: [],
     usersKeeps: [],
     author: {},
-    lastGetCount: 0
+    lastGetCount: 0,
+    usersVaults: []
   },
   mutations: {
     resetState(state, payload) {
@@ -80,6 +82,12 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+    //
+    //VAULTS MUTATIONS
+    //
+    setUsersVaults(state, vaultsArr) {
+      state.usersVaults = vaultsArr
     }
   },
   actions: {
@@ -186,6 +194,17 @@ export default new Vuex.Store({
           commit("addKeep", res.data)
         })
         .catch(e => console.log("ERROR", e))
+    },
+
+    //
+    //VAULTS ACTIONS
+    //
+    getUsersVaults({ commit }, userId) {
+      api.get(`vaults/${userId}`)
+        .then(res => {
+          commit("setUsersVaults", res.data)
+        })
+        .catch(e => console.log(e))
     }
   }
 })

@@ -14,7 +14,7 @@
           <v-chip v-model="caughtUp" color="cyan" outline close>You're all caught up!</v-chip>
         </v-layout>
     </v-container>
-        <bottom-bar />
+    <bottom-bar />
   </div>
 </template>
 
