@@ -29,12 +29,12 @@
                             <vaults :vault="vault" :i="index + 3" :user="user" />
                         </v-flex>
                         <!-- this is the create a vault square -->
-                        <v-flex pa-1>
+                        <v-flex pa-1 mb-3>
                             <v-card color="amber darken-4" width="20vw" height="10vw">
                                 <v-layout v-if="!createVault" fill-height column align-center justify-center>
                                     <h1>Create a Vault</h1>
                                     <v-btn @click="createVault = !createVault" icon color="blue-grey lighten-4" small>
-                                        <v-icon large color="">fas fa-plus-circle</v-icon>
+                                        <v-icon large>fas fa-plus-circle</v-icon>
                                     </v-btn>
                                 </v-layout>
                                 <v-layout v-else fill-height column align-center justify-center>
@@ -63,67 +63,66 @@
     </v-dialog>
 </template>
 <script>
-    import Keeps from "@/components/Keeps";
-    import Vaults from "@/components/Vaults";
-    export default {
-        name: "profile",
-        data() {
-            return {
-                showProfile: false,
-                createVault: false,
-                showDescription: false,
-                newVault: {
-                    name: "",
-                    description: ""
-                }
-            };
-        },
-        computed: {
-            user() {
-                return this.$store.state.user;
-            },
-            usersKeeps() {
-                return this.$store.state.usersKeeps;
-            },
-            usersVaults() {
-                return this.$store.state.usersVaults;
-            }
-        },
-        components: {
-            Keeps,
-            Vaults
-        },
-        methods: {
-            getUsersKsAndVs() {
-                this.$store.dispatch("getUsersKeeps", this.user.id);
-                this.$store.dispatch("getUsersVaults", this.user.id);
-            },
-            closeProfile() {
-                this.showProfile = false;
-                this.$store.commit("setUsersKeeps", []);
-                this.$store.commit("setUsersVaults", []);
-            },
-            submitVault() {
-                let v = this.newVault
-                v.userId = this.user.id
-                this.$store.dispatch("createVault", v)
-                this.createVault = false
-                this.showDescription = false
-                this.newVault = {
-                    name: "",
-                    description: ""
-                }
-            }
-        }
+import Keeps from "@/components/Keeps";
+import Vaults from "@/components/Vaults";
+export default {
+  name: "profile",
+  data() {
+    return {
+      showProfile: false,
+      createVault: false,
+      showDescription: false,
+      newVault: {
+        name: "",
+        description: ""
+      }
     };
+  },
+  computed: {
+    user() {
+      return this.$store.state.user;
+    },
+    usersKeeps() {
+      return this.$store.state.usersKeeps;
+    },
+    usersVaults() {
+      return this.$store.state.usersVaults;
+    }
+  },
+  components: {
+    Keeps,
+    Vaults
+  },
+  methods: {
+    getUsersKsAndVs() {
+      this.$store.dispatch("getUsersKeeps", this.user.id);
+      this.$store.dispatch("getUsersVaults", this.user.id);
+    },
+    closeProfile() {
+      this.showProfile = false;
+      this.$store.commit("setUsersKeeps", []);
+      this.$store.commit("setUsersVaults", []);
+    },
+    submitVault() {
+      let v = this.newVault;
+      v.userId = this.user.id;
+      this.$store.dispatch("createVault", v);
+      this.createVault = false;
+      this.showDescription = false;
+      this.newVault = {
+        name: "",
+        description: ""
+      };
+    }
+  }
+};
 </script>
 <style>
-    #h2 {
-        overflow-y: scroll;
-    }
-
-    #h-exp {
-        height: fit-content;
-        z-index: 1;
-    }
+#h2 {
+  overflow-y: scroll;
+}
+#h-exp {
+  height: fit-content;
+  z-index: 1;
+}
 </style>
