@@ -1,11 +1,11 @@
 <template>
     <v-dialog v-model="showProfile" fullscreen transition="slide-y-transition">
-        <v-btn @click="getUsersKsAndVs()" slot="activator" flat fab>
+        <v-btn slot="activator" flat fab>
             <v-icon>fas fa-user</v-icon>
         </v-btn>
         <v-toolbar app color="amber darken-4">
             <v-spacer></v-spacer>
-            <v-btn @click="closeProfile()" fab flat>
+            <v-btn @click="showProfile = !showProfile" fab flat>
                 <v-icon>close</v-icon>
             </v-btn>
         </v-toolbar>
@@ -17,7 +17,7 @@
                         <h3 slot="header" class="pa-2">you've authored {{usersKeeps.length}} keeps</h3>
                         <v-layout fill-height align-center wrap>
                             <v-flex xs12 sm12 md2 lg3 pa-1 v-for="keep in usersKeeps" :key="keep.id">
-                                <keeps :keep="keep" />
+                                <keeps :keep="keep" :fromProfile="true" />
                             </v-flex>
                         </v-layout>
                     </v-expansion-panel-content>
@@ -94,15 +94,6 @@ export default {
     Vaults
   },
   methods: {
-    getUsersKsAndVs() {
-      this.$store.dispatch("getUsersKeeps", this.user.id);
-      this.$store.dispatch("getUsersVaults", this.user.id);
-    },
-    closeProfile() {
-      this.showProfile = false;
-      this.$store.commit("setUsersKeeps", []);
-      this.$store.commit("setUsersVaults", []);
-    },
     submitVault() {
       let v = this.newVault;
       v.userId = this.user.id;

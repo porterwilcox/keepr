@@ -23,7 +23,8 @@ const initialState = {
   usersKeeps: [],
   author: {},
   lastGetCount: 0,
-  usersVaults: []
+  usersVaults: [],
+  vaultsKeeps: []
 }
 
 export default new Vuex.Store({
@@ -33,7 +34,8 @@ export default new Vuex.Store({
     usersKeeps: [],
     author: {},
     lastGetCount: 0,
-    usersVaults: []
+    usersVaults: [],
+    vaultsKeeps: []
   },
   mutations: {
     resetState(state, payload) {
@@ -102,6 +104,21 @@ export default new Vuex.Store({
           break;
         }
       }
+    },
+    //
+    //VAULTKEEPS MUTATIONS
+    //
+    setVaultsKeeps(state, vaultsKeeps) {
+      state.vaultsKeeps = vaultsKeeps
+    },
+    removeKeepFromVault(state, keepId) {
+      for (let i = 0; i < state.vaultsKeeps.length; i++) {
+        let keep = state.vaultsKeeps[i]
+        if (keep.id == keepId) {
+          state.vaultsKeeps.splice(i, 1)
+          break;
+        }
+      }
     }
   },
   actions: {
@@ -123,6 +140,8 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
           router.push({ name: 'home' })
+          dispatch('getUsersVaults', res.data.id)
+          dispatch("getUsersKeeps", res.data.id);
         })
         .catch(e => {
           console.log('not authenticated')
@@ -133,6 +152,8 @@ export default new Vuex.Store({
         .then(res => {
           commit('setUser', res.data)
           router.push({ name: 'home' })
+          dispatch('getUsersVaults', res.data.id)
+          dispatch("getUsersKeeps", res.data.id);
         })
         .catch(e => {
           console.log('Login Failed')
@@ -237,6 +258,26 @@ export default new Vuex.Store({
         .catch(e => {
           console.log('error:', e)
         })
+    },
+    //
+    //VAULTKEEPS ACTIONS
+    //
+    getVaultsKeeps({commit}, vaultId) {
+      api.get(`vaultKeeps/${vaultId}`)
+        .then(res => {
+          commit("setVaultsKeeps", res.data)
+        })
+        .catch(e => console.log(e))
+    },
+    removeKeepFromVault({commit}, vk) {
+      api.delete('vaultKeeps', {data: vk})
+        .then(res => {
+          if (res.data) {
+            return commit("removeKeepFromVault", vk.keepId)
+          }
+          console.log("error: unsuccessful delete")
+        })
+        .catch(e => console.log(e))
     }
   }
 })
