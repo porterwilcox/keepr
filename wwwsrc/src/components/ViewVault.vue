@@ -1,6 +1,5 @@
 <template>
     <v-dialog v-model="openVault" fullscreen transition="scale-transition">
-        <v-btn></v-btn>
         <v-toolbar app :color="!(i % 3) ? 'light-blue darken-3' : !(i % 2) ? 'cyan darken-3' : 'teal darken-3'">
             <h2 class="white--text">{{vault.name.toUpperCase()}} has (compute vaultsKeeps.length here) keeps</h2>
             <v-spacer></v-spacer>

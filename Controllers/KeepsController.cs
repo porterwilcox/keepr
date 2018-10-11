@@ -40,7 +40,7 @@ namespace keepr.Controllers
             return keep;
         }
 
-        // [Authorize]
+        [Authorize]
         [HttpDelete]
         public bool Delete([FromBody] KeepToDelete payload)
         {

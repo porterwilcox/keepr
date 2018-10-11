@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using Dapper;
 using keepr.Models;
 
@@ -31,17 +32,6 @@ namespace keepr.Repositories
             WHERE userId = @userId
             ORDER BY id DESC;", new { userId });
         }
-
-
-        // public IEnumerable<Keep> GetSomePublic(int num)
-        // {
-        //     int rangeL = 25 * num + 1;
-        //     num++;
-        //     int rangeH = 25 * num;
-        //     return _db.Query<Keep>($@"SELECT * FROM keeps
-        //     WHERE isPrivate = 0 AND id >= @rangeL AND id <= @rangeH;", new { rangeL, rangeH });
-        // }
-        //Post a Keep
         public Keep Create(Keep keep)
         {
             int id = _db.ExecuteScalar<int>(@"INSERT INTO keeps
@@ -60,8 +50,36 @@ namespace keepr.Repositories
             return true;
         }
 
+        //
+        //VAULTKEEPS
+        //
 
+        //Create a vaultkeep
+        public int CreateVaultKeep(VaultKeep vk)
+        {
+            Keep keep = _db.Query<Keep>(@"SELECT * FROM vaultKeeps
+            WHERE keepId = @KeepId AND vaultId = @VaultId;", vk).FirstOrDefault();
+            if (keep != null) return 0;
+            return _db.ExecuteScalar<int>(@"INSERT INTO vaultKeeps
+            (vaultId, keepId, userId)
+            VALUES (@VaultId, @KeepId, @UserID);
+            SELECT LAST_INSERT_ID();", vk);
+        }
 
+        //Delete a vaultkeep
+        public int DeleteVaultKeep(int keepId, int vaultId)
+        {
+            return _db.Execute(@"DELETE FROM vaultkeeps
+            WHERE keepId = @keepId AND vaultId =@vaultId;", new { keepId, vaultId });
+        }
+
+        //Get keeps within a vault
+        public IEnumerable<Keep> GetKeepsByVaultId(int vaultId)
+        {
+            return _db.Query<Keep>(@"SELECT * FROM vaultkeeps vk
+            INNER JOIN keeps k ON k.id = vk.keepId 
+            WHERE (vaultId = @vaultId);", new { vaultId });
+        }
 
 
         public KeepsRepository(IDbConnection db)

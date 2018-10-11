@@ -60,6 +60,7 @@ export default new Vuex.Store({
       let arr = state.keeps.concat(keepArr)
       state.keeps = arr
       state.lastGetCount = keepArr.length
+      console.log(keepArr)
     },
     addKeep(state, keep) {
       state.keeps.unshift(keep)
@@ -88,6 +89,7 @@ export default new Vuex.Store({
     //
     setUsersVaults(state, vaultsArr) {
       state.usersVaults = vaultsArr
+      console.log(vaultsArr)
     },
     addVault(state, vault) {
       state.usersVaults.push(vault)
