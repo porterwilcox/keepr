@@ -92,7 +92,5 @@
 <style scoped>
 #h {
     height: 100vh;
-    background-image: url("http://dualmonitorswallpaper.com/wp-content/uploads/2018/02/multi-picture-wallpaper-8.jpg");
-    background-size: cover;
 }
 </style>
