@@ -10,7 +10,7 @@
             </v-btn>
         </v-toolbar>
         <v-container id="h3" fill-height fluid :class="!(i % 3) ? 'light-blue darken-1' : !(i % 2) ? 'cyan darken-1' : 'teal darken-1'">
-            <v-layout v-if="!vaultsKeeps.length" justify-center align-center>
+            <v-layout v-if="!vaultsKeeps.length" justify-center align-center mt-5>
                 <v-card width="400px" height="450px" class="transparent">
                     <v-img src="https://github.com/porterwilcox/keepr/blob/master/wwwsrc/src/assets/empty.jpg?raw=true"></v-img>
                     <v-layout justify-center>

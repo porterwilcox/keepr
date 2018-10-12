@@ -50,7 +50,6 @@ export default new Vuex.Store({
     //
     setUser(state, user) {
       state.user = user
-      console.log(user)
     },
     setAuthor(state, author) {
       state.author = author
@@ -62,7 +61,6 @@ export default new Vuex.Store({
       let arr = state.keeps.concat(keepArr)
       state.keeps = arr
       state.lastGetCount = keepArr.length
-      console.log(keepArr)
     },
     addKeep(state, keep) {
       state.keeps.unshift(keep)
@@ -91,7 +89,6 @@ export default new Vuex.Store({
     //
     setUsersVaults(state, vaultsArr) {
       state.usersVaults = vaultsArr
-      console.log(vaultsArr)
     },
     addVault(state, vault) {
       state.usersVaults.push(vault)
@@ -187,14 +184,22 @@ export default new Vuex.Store({
     //Keeps
     //
     getKeeps({ dispatch, commit, state }, id) {
-      if (id == "first" && !state.keeps.length) {
-        api.get('keeps')
+      if (id == "first" && !state.keeps.length && !state.user.id) {
+        let id = -1
+        api.get(`keeps/${id}`)
           .then(res => {
             commit('setKeeps', res.data)
           })
           .catch(e => console.log(e))
       }
-      // else if (typeof id == "number") {
+      else if (id == "first" && !state.keeps.length) {
+        let id = 0
+        api.get(`keeps/${id}`)
+          .then(res => {
+            commit('setKeeps', res.data)
+          })
+          .catch(e => console.log(e))
+      }
       else {
         api.get(`keeps/${id}`)
           .then(res => {
@@ -230,7 +235,15 @@ export default new Vuex.Store({
         })
         .catch(e => console.log("ERROR", e))
     },
-
+    incrementViews({ }, id) {
+      api.put(`keeps/${id}`)
+        .then(res => {
+          if (res.data) {
+            console.log('success')
+          }
+        })
+        .catch(e => console.log(e))
+    },
     //
     //VAULTS ACTIONS
     //
@@ -241,14 +254,14 @@ export default new Vuex.Store({
         })
         .catch(e => console.log(e))
     },
-    createVault({commit}, vault) {
+    createVault({ commit }, vault) {
       api.post('vaults', vault)
         .then(res => {
           commit("addVault", res.data)
         })
     },
-    deleteVault({commit}, vault) {
-      api.delete('vaults', {data: vault})
+    deleteVault({ commit }, vault) {
+      api.delete('vaults', { data: vault })
         .then(res => {
           if (res.data) {
             return commit("removeVault", vault.id)
@@ -262,20 +275,30 @@ export default new Vuex.Store({
     //
     //VAULTKEEPS ACTIONS
     //
-    getVaultsKeeps({commit}, vaultId) {
+    getVaultsKeeps({ commit }, vaultId) {
       api.get(`vaultKeeps/${vaultId}`)
         .then(res => {
           commit("setVaultsKeeps", res.data)
         })
         .catch(e => console.log(e))
     },
-    removeKeepFromVault({commit}, vk) {
-      api.delete('vaultKeeps', {data: vk})
+    removeKeepFromVault({ commit }, vk) {
+      api.delete('vaultKeeps', { data: vk })
         .then(res => {
           if (res.data) {
             return commit("removeKeepFromVault", vk.keepId)
           }
           console.log("error: unsuccessful delete")
+        })
+        .catch(e => console.log(e))
+    },
+    addKeepToVault({ commit }, vk) {
+      api.post('vaultKeeps', vk)
+        .then(res => {
+          if (res.data) {
+            return console.log("success")
+          }
+          console.log("already in your database")
         })
         .catch(e => console.log(e))
     }

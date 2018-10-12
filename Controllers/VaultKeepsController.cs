@@ -23,7 +23,7 @@ namespace keepr.Controllers
         {
             if (!ModelState.IsValid) throw new Exception("Invalid information to add keep to vault.");
             int success = _repo.CreateVaultKeep(vk);
-            if (success == 0) throw new Exception("Error inserting vault keep relation into db.");
+            if (success == 0) return false;
             return true;
         }
 

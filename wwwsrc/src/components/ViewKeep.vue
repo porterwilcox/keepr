@@ -1,6 +1,6 @@
 <template>
     <v-dialog v-model="viewKeep" transition="scale-transition" width="fit-content">
-        <v-btn @click="getAuthor(keep.userId)" slot="activator" flat fab small color="amber darken-4">view</v-btn>
+        <v-btn @click="viewed()" slot="activator" flat fab small color="amber darken-4">view</v-btn>
         <v-layout justify-center>
             <v-card v-if="keep.img.length > 0" width="80vw" height="80vh">
                 <v-toolbar card color="cyan lighten-4">
@@ -80,8 +80,10 @@ export default {
     }
   },
   methods: {
-    getAuthor(userId) {
-      this.$store.dispatch("getAuthor", userId);
+    viewed() {
+      this.$store.dispatch("getAuthor", this.keep.userId);
+      this.$store.dispatch("incrementViews", this.keep.id);
+      this.keep.views++;
     }
   }
 };

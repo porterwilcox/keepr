@@ -16,7 +16,7 @@
         <v-card-text>{{keep.description}}</v-card-text>
         <v-card-actions :id="fromProfile ? 'P'+keep.id : fromVault ? 'VK'+keep.id : keep.id" class="buttons"> 
             <view-keep :keep="keep"/>
-            <v-btn flat fab small color="amber darken-4">keep</v-btn> 
+            <add-keep-to-vault v-if="user.id" :keep="keep" />
             <v-speed-dial v-model="shareExpand" direction="right" transition="slide-y-reverse-transition">
                 <v-btn slot="activator" v-model="shareExpand" color="amber darken-4" fab flat small>
                     <v-icon>fa-share</v-icon>
@@ -41,16 +41,19 @@
 </template>
 <script>
 import ViewKeep from "@/components/ViewKeep";
+import AddKeepToVault from "@/components/AddKeepToVault";
 export default {
   name: "keeps",
   data() {
     return {
-      shareExpand: false
+      shareExpand: false,
+      openMenu: false
     };
   },
   props: ["keep", "fromProfile", "fromVault", "vaultId"],
   components: {
-    ViewKeep
+    ViewKeep,
+    AddKeepToVault
   },
   computed: {
     user() {

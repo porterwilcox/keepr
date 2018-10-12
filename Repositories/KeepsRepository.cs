@@ -12,17 +12,23 @@ namespace keepr.Repositories
         IDbConnection _db;
 
         //GET SOME KEEPS, not all bc faster load times
-        public IEnumerable<Keep> GetSomePublic()
+        public IEnumerable<Keep> GetSomePublic(string status)
         {
+            if (status == "browsing") 
+            {
             return _db.Query<Keep>(@"SELECT * FROM keeps
             WHERE isPrivate = 0
+            ORDER BY id DESC
+            LIMIT 28;");
+            }
+            return _db.Query<Keep>(@"SELECT * FROM keeps
             ORDER BY id DESC
             LIMIT 28;");
         }
         public IEnumerable<Keep> GetSomePublic(int id)
         {
             return _db.Query<Keep>($@"SELECT * FROM keeps
-            WHERE isPrivate = 0 AND id < @id
+            WHERE id < @id
             ORDER BY id DESC
             LIMIT 28;", new { id });
         }
@@ -47,6 +53,13 @@ namespace keepr.Repositories
         {
             int successfulDelete = _db.Execute("DELETE FROM keeps WHERE id = @id", new { id });
             if (successfulDelete != 1) return false;
+            return true;
+        }
+
+        internal bool incrementViews(int id)
+        {
+            int success = _db.Execute(@"UPDATE keeps SET views = views + 1 WHERE id = @id;", new { id });
+            if (success == 0) return false;
             return true;
         }
 

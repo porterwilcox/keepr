@@ -7,7 +7,10 @@
               <keeps :keep="keep" />
             </v-flex>
         </v-layout>
-        <v-layout v-if="lastGetCount == 28" justify-center pt-5 mt-5>
+        <v-layout v-if="browsing" justify-center mt-5>
+          <v-btn @click="createAccount()" color="cyan lighten-3" round class="white--text">Sign up now to see more!</v-btn>
+        </v-layout>
+        <v-layout v-else-if="lastGetCount == 28" justify-center pt-5 mt-5>
           <v-btn round color="cyan lighten-3" class="white--text" @click="getKeeps(keeps[keeps.length-1].id)">load more</v-btn round>
         </v-layout>
         <v-layout v-else justify-center mt-5>
@@ -28,7 +31,7 @@ export default {
   data() {
     return {
       caughtUp: true
-    }
+    };
   },
   mounted() {
     //blocks users not logged in
@@ -36,9 +39,8 @@ export default {
       return this.$store.dispatch("getKeeps", "first");
     }
     if (!this.$store.state.user.id) {
-      this.$router.push({ name: "login" });      
-    }
-    else {
+      this.$router.push({ name: "login" });
+    } else {
       this.$store.dispatch("getKeeps", "first");
     }
   },
@@ -47,7 +49,7 @@ export default {
       return this.$store.state.keeps;
     },
     lastGetCount() {
-      return this.$store.state.lastGetCount
+      return this.$store.state.lastGetCount;
     }
   },
   components: {
@@ -58,6 +60,9 @@ export default {
   methods: {
     getKeeps(id) {
       this.$store.dispatch("getKeeps", id);
+    },
+    createAccount() {
+      this.$store.dispatch("createAccount");
     }
   }
 };

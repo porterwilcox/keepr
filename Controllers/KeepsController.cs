@@ -13,15 +13,11 @@ namespace keepr.Controllers
     {
         KeepsRepository _repo;
 
-        [HttpGet]
-        public IEnumerable<Keep> Get()
-        {
-            return _repo.GetSomePublic();
-        }
-
         [HttpGet("{id}")]
         public IEnumerable<Keep> Get([FromRoute] int id)
         {
+            if (id == -1) return _repo.GetSomePublic("browsing");
+            if (id == 0) return _repo.GetSomePublic("user");
             return _repo.GetSomePublic(id);
         }
 
@@ -38,6 +34,12 @@ namespace keepr.Controllers
             Keep keep = _repo.Create(rawKeep);
             if (keep == null) throw new Exception("Error inserting keep into the db.");
             return keep;
+        }
+
+        [HttpPut("{id}")]
+        public bool Put([FromRoute] int id)
+        {
+            return _repo.incrementViews(id);
         }
 
         [Authorize]
