@@ -4,7 +4,7 @@
             <v-icon color="grey lighten-5" large>fab fa-korvue</v-icon>
         </v-btn>
         <v-toolbar-items>
-            <v-text-field prepend-inner-icon="search" single-line clearable v-model="search" placeholder="search keeps"></v-text-field>
+            <v-text-field prepend-inner-icon="search" single-line clearable v-model="search" disabled placeholder="work in progress"></v-text-field>
         </v-toolbar-items>
         <v-toolbar-title ml-5>keepr</v-toolbar-title>
         <v-spacer></v-spacer>
