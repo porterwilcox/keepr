@@ -1,3 +1,3 @@
 module.exports = {
-    outputDir: "C:\\source\\codeworks\\keepr\\wwwsrc"
+    outputDir: "C:\\source\\codeworks\\keepr\\wwwroot"
 }
